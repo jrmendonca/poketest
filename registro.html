@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+<style>
+.columnleft {
+  float: left;
+  width: 50%;
+}
+.columnright {
+  float: right;
+  width: 50%;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+</style>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!--Inlcudes JQuery -->
+<script type="text/javascript">
+window.onload = function(){
+        fetch('https://pokemonteste.herokuapp.com/registro') // Trás os registros do que rolou
+        .then(response => response.json())
+        .then(function(geraHTML){
+            geraHTML.forEach(function(troca){
+                fetchDadosTroca(troca);
+            })
+        })
+}
+function fetchDadosTroca(troca){
+    let origem = troca.strListaPokemonOrigem;
+    let destino = troca.strListaPokemonDestino;
+
+    let ContainerdePokemonsOrigem = document.getElementById('listaPokemonsOrigem'); //Trabalharei a listagem de Pokemon Origem
+    let ContainerdePokemonsDestino = document.getElementById('listaPokemonsDestino'); //Trabalharei a listagem de Pokemon Destino
+
+    let PokemonContainerOrigem = document.createElement("div")
+    let PokemonContainerDestino = document.createElement("div")
+
+    let LabelComPokeMonOrigem = document.createElement("Label")
+    let LabelComPokeMonDestino = document.createElement("Label")
+
+    LabelComPokeMonOrigem.htmlFor = origem;
+    LabelComPokeMonDestino.htmlFor = destino;
+
+
+    LabelComPokeMonDestino.appendChild(document.createTextNode(destino));
+    LabelComPokeMonOrigem.appendChild(document.createTextNode(origem));
+
+    PokemonContainerOrigem.append(LabelComPokeMonOrigem)
+
+    PokemonContainerDestino.append(LabelComPokeMonDestino)
+
+    ContainerdePokemonsOrigem.appendChild(PokemonContainerOrigem)
+    ContainerdePokemonsDestino.appendChild(PokemonContainerDestino)
+    //document.write ("<b>Trocou:</b> " + origem + " <b>Por:</b> " + destino + "<BR>");
+}
+</script>
+
+</head>
+<body>
+    <div id="header-container" class="ui inverted segment">
+        <div class="ui inverted secondary menu" text>
+           <h1 id="textoStatus">Pokemon Trader: Resultado das trocas</h1><br>
+        </div>
+    </div>
+    <div class ="row">
+        <div class="columnleft" id="listaPokemonsOrigem"><b>Pokemon Origem</b></br></br></div>
+        <div class= "columnright" id="listaPokemonsDestino"><b>Pokemon Destino</b><br><br>
+        </div>
+    </div>
+
+</body>
+</html>
